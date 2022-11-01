@@ -1,5 +1,6 @@
 using JarvisWebRRHH.Areas.Identity;
 using JarvisWebRRHH.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -41,6 +42,11 @@ namespace JarvisWebRRHH
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddSingleton<WeatherForecastService>();
+
+
+            services.AddControllers(); //Para poder añadir y gestionar controladores
+            //Se usa cookies para mantener el estado de autenticación
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,14 +68,14 @@ namespace JarvisWebRRHH
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            //Midleware para gestionar la autentificacion y autorización
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
                 endpoints.MapBlazorHub();
+                endpoints.MapControllers();
                 endpoints.MapFallbackToPage("/_Host");
             });
         }

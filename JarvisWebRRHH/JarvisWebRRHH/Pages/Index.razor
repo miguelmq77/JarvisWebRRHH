@@ -1,7 +1,11 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+<AuthorizeView>
+    <Authorized Context="AuthenticationSatate">
+        <h1>Inicio</h1>
+        <h2>Bienvenido</h2>
+    </Authorized>
+    <NotAuthorized>
+        <h2>Debe identificarse para poder acceder a la aplicación</h2>
+    </NotAuthorized>
+</AuthorizeView>

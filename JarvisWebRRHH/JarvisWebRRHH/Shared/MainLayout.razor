@@ -1,18 +1,27 @@
 ﻿@inherits LayoutComponentBase
-
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
 
     <div class="main">
-        <div class="top-row px-4 auth">
-            <LoginDisplay />
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        <div class="top-row px-4">
+            <h1>Validación usuario y clave</h1>
+            <AuthorizeView>
+                <Authorized>
+                    <span class="ml-md-auto">
+                        Usuario conectado: @context.User.Identity.Name
+                        <a href="/account/logout">Logout</a>
+                    </span>
+                </Authorized>
+                <NotAuthorized>
+                    <a href="login" class="ml-md-auto">Login</a>
+                </NotAuthorized>
+            </AuthorizeView>
         </div>
-
         <div class="content px-4">
             @Body
         </div>
     </div>
 </div>
+
